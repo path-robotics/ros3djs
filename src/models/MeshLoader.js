@@ -108,6 +108,12 @@ ROS3D.MeshLoader = {
      'stl': function(meshRes, uri, options) {
        const material = options.material;
        const loader = new THREE.STLLoader(options.loader);
+
+       // path custom
+       const onProgressCb = options.onProgress || null;
+       const onComplete = options.onComplete || null;
+       const onError = options.onError || null;
+
        {
          loader.load(uri,
                      function ( geometry ) {
@@ -121,8 +127,16 @@ ROS3D.MeshLoader = {
                        }
                        meshRes.add(mesh);
                      },
-                     /*onProgress=*/null,
-                     ROS3D.MeshLoader.onError);
+                     function onProgress(progressEvent) {
+                       if (onProgressCb) {
+                         onProgressCb(progressEvent);
+                       }
+ 
+                       if (onComplete && progressEvent.loaded === progressEvent.total) {
+                         onComplete();
+                       }
+                     },
+                     onError ? onError : ROS3D.MeshLoader.onError);
        }
        return loader;
      }
