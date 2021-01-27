@@ -73,11 +73,14 @@ ROS3D.Viewer = function(options) {
     lineTypePanAndZoomFrame: lineTypePanAndZoomFrame
   });
   this.cameraControls.userZoomSpeed = cameraZoomSpeed;
-
   // lights
   this.scene.add(new THREE.AmbientLight(0x555555));
   this.directionalLight = new THREE.DirectionalLight(0xffffff, intensity);
   this.scene.add(this.directionalLight);
+  this.cameraControls.addEventListener('change', () => {
+    console.log('camera change');
+    this.directionalLight.position.copy(this.cameraControls.position);
+  });
 
   // propagates mouse events to three.js objects
   this.selectableObjects = new THREE.Group();
