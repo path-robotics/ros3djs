@@ -56954,8 +56954,8 @@ var Viewer = function Viewer(options) {
   this.scene.add(new THREE$1.AmbientLight(0x555555));
   this.directionalLight = new THREE$1.DirectionalLight(0xffffff, intensity);
   this.scene.add(this.directionalLight);
-  this.cameraControls.addEventListener('change', function () {
-    this$1.directionalLight.position.copy(this$1.cameraControls.cameraControls.position);
+  this.camera.addEventListener('change', function () {
+    this$1.directionalLight.position.copy(this$1.camera.position);
   });
 
   // propagates mouse events to three.js objects
