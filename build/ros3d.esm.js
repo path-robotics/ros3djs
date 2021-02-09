@@ -56950,7 +56950,8 @@ var Viewer = function Viewer(options) {
   this.scene.add(new THREE$1.AmbientLight(0x555555));
   this.directionalLight = new THREE$1.DirectionalLight(0xffffff, intensity);
   this.scene.add(this.directionalLight);
-  this.camera.addEventListener('change', function () {
+  this.cameraControls.addEventListener('change', function () {
+    console.log('camera.position: ', this$1.camera.position);
     this$1.directionalLight.position.copy(this$1.camera.position);
   });
 
