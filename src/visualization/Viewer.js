@@ -77,7 +77,8 @@ ROS3D.Viewer = function(options) {
   this.scene.add(new THREE.AmbientLight(0x555555));
   this.directionalLight = new THREE.DirectionalLight(0xffffff, intensity);
   this.scene.add(this.directionalLight);
-  this.camera.addEventListener('change', () => {
+  this.cameraControls.addEventListener('change', () => {
+    console.log('camera.position: ', this.camera.position);
     this.directionalLight.position.copy(this.camera.position);
   });
 
