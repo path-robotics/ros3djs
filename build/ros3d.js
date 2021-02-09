@@ -57409,7 +57409,10 @@ class Viewer {
     this.scene.add(new THREE$1.AmbientLight(0x555555));
     this.directionalLight = new THREE$1.DirectionalLight(0xffffff, intensity);
     this.scene.add(this.directionalLight);
-
+    this.cameraControls.addEventListener('change', () => {
+      this.directionalLight.position.copy(this.camera.position);
+    });
+    
     // propagates mouse events to three.js objects
     this.selectableObjects = new THREE$1.Group();
     this.scene.add(this.selectableObjects);

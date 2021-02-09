@@ -56901,6 +56901,8 @@ var OrbitControls = /*@__PURE__*/(function (superclass) {
  */
 
 var Viewer = function Viewer(options) {
+  var this$1 = this;
+
   options = options || {};
   var divID = options.divID;
   var elem = options.elem;
@@ -56953,7 +56955,10 @@ var Viewer = function Viewer(options) {
   this.scene.add(new THREE$1.AmbientLight(0x555555));
   this.directionalLight = new THREE$1.DirectionalLight(0xffffff, intensity);
   this.scene.add(this.directionalLight);
-
+  this.cameraControls.addEventListener('change', function () {
+    this$1.directionalLight.position.copy(this$1.camera.position);
+  });
+    
   // propagates mouse events to three.js objects
   this.selectableObjects = new THREE$1.Group();
   this.scene.add(this.selectableObjects);
