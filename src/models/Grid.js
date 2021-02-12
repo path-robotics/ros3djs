@@ -1,3 +1,5 @@
+import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
+
 /**
  * @author Russell Toris - rctoris@wpi.edu
  */
@@ -30,18 +32,18 @@ ROS3D.Grid = function(options) {
   for (var i = 0; i <= num_cells; ++i) {
     var edge = cellSize * num_cells / 2;
     var position = edge - (i * cellSize);
-    var geometryH = new THREE.Geometry();
+    var geometryH = new THREE_DEPRECATED.Geometry();
     geometryH.vertices.push(
       new THREE.Vector3( -edge, position, 0 ),
       new THREE.Vector3( edge, position, 0 )
     );
-    var geometryV = new THREE.Geometry();
+    var geometryV = new THREE_DEPRECATED.Geometry();
     geometryV.vertices.push(
       new THREE.Vector3( position, -edge, 0 ),
       new THREE.Vector3( position, edge, 0 )
     );
-    this.add(new THREE.Line(geometryH, material));
-    this.add(new THREE.Line(geometryV, material));
+    this.add(new THREE.Line(geometryH.toBufferGeometry(), material));
+    this.add(new THREE.Line(geometryV.toBufferGeometry(), material));
   }
 };
 

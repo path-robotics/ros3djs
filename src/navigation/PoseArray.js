@@ -1,3 +1,5 @@
+import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
+
 /**
  * @author David V. Lu!! - davidvlu@gmail.com
  */
@@ -62,7 +64,7 @@ ROS3D.PoseArray.prototype.processMessage = function(message){
   var line;
 
   for(var i=0;i<message.poses.length;i++){
-      var lineGeometry = new THREE.Geometry();
+      var lineGeometry = new THREE_DEPRECATED.Geometry();
 
       var v3 = new THREE.Vector3( message.poses[i].position.x, message.poses[i].position.y,
                                   message.poses[i].position.z);
@@ -84,7 +86,7 @@ ROS3D.PoseArray.prototype.processMessage = function(message){
       lineGeometry.vertices.push(tip);
       
       var lineMaterial = new THREE.LineBasicMaterial( { color: this.color } );
-      line = new THREE.Line( lineGeometry, lineMaterial );
+      line = new THREE.Line( lineGeometry.toBufferGeometry(), lineMaterial );
       line.computeLineDistances();
 
       group.add(line);

@@ -1,3 +1,5 @@
+import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
+
 /**
  * @author David Gossow - dgossow@willowgarage.com
  * @author Russell Toris - rctoris@wpi.edu
@@ -97,7 +99,7 @@ ROS3D.Marker = function(options) {
       this.add(cylinderMesh);
       break;
     case ROS3D.MARKER_LINE_STRIP:
-      var lineStripGeom = new THREE.Geometry();
+      var lineStripGeom = new THREE_DEPRECATED.Geometry();
       var lineStripMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
@@ -125,10 +127,10 @@ ROS3D.Marker = function(options) {
       }
 
       // add the line
-      this.add(new THREE.Line(lineStripGeom, lineStripMaterial));
+      this.add(new THREE.Line(lineStripGeom.toBufferGeometry(), lineStripMaterial));
       break;
     case ROS3D.MARKER_LINE_LIST:
-      var lineListGeom = new THREE.Geometry();
+      var lineListGeom = new THREE_DEPRECATED.Geometry();
       var lineListMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
@@ -156,7 +158,7 @@ ROS3D.Marker = function(options) {
       }
 
       // add the line
-      this.add(new THREE.Line(lineListGeom, lineListMaterial,THREE.LinePieces));
+      this.add(new THREE.Line(lineListGeom.toBufferGeometry(), lineListMaterial,THREE.LinePieces));
       break;
     case ROS3D.MARKER_CUBE_LIST:
       // holds the main object
@@ -224,7 +226,7 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_POINTS:
       // for now, use a particle system for the lists
-      var geometry = new THREE.Geometry();
+      var geometry = new THREE_DEPRECATED.Geometry();
       var material = new THREE.ParticleBasicMaterial({
         size : message.scale.x
       });
@@ -252,7 +254,7 @@ ROS3D.Marker = function(options) {
       }
 
       // add the particle system
-      this.add(new THREE.ParticleSystem(geometry, material));
+      this.add(new THREE.ParticleSystem(geometry.toBufferGeometry(), material));
       break;
     case ROS3D.MARKER_TEXT_VIEW_FACING:
       // only work on non-empty text

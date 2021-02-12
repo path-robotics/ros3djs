@@ -1,3 +1,5 @@
+import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
+
 /**
  * @author David Gossow - dgossow@willowgarage.com
  */
@@ -24,7 +26,7 @@ ROS3D.TriangleList = function(options) {
   material.side = THREE.DoubleSide;
 
   // construct the geometry
-  var geometry = new THREE.Geometry();
+  var geometry = new THREE_DEPRECATED.Geometry();
   for (i = 0; i < vertices.length; i++) {
     geometry.vertices.push(new THREE.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
   }
@@ -63,7 +65,7 @@ ROS3D.TriangleList = function(options) {
   geometry.computeBoundingSphere();
   geometry.computeFaceNormals();
 
-  this.add(new THREE.Mesh(geometry, material));
+  this.add(new THREE.Mesh(geometry.toBufferGeometry(), material));
 };
 ROS3D.TriangleList.prototype.__proto__ = THREE.Object3D.prototype;
 

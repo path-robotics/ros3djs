@@ -1,3 +1,5 @@
+import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
+
 /**
  * @author Julius Kammerl - jkammerl@willowgarage.com
  */
@@ -236,7 +238,7 @@ ROS3D.DepthCloud.prototype.initStreamer = function() {
 
   if (this.metaLoaded) {
     this.texture = new THREE.Texture(this.video);
-    this.geometry = new THREE.Geometry();
+    this.geometry = new THREE_DEPRECATED.Geometry();
 
     for (var i = 0, l = this.width * this.height; i < l; i++) {
 
@@ -294,7 +296,7 @@ ROS3D.DepthCloud.prototype.initStreamer = function() {
       fragmentShader : this.fragment_shader
     });
 
-    this.mesh = new THREE.ParticleSystem(this.geometry, this.material);
+    this.mesh = new THREE.ParticleSystem(this.geometry.toBufferGeometry(), this.material);
     this.mesh.position.x = 0;
     this.mesh.position.y = 0;
     this.add(this.mesh);
