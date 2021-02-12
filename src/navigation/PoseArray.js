@@ -1,5 +1,3 @@
-import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
-
 /**
  * @author David V. Lu!! - davidvlu@gmail.com
  */
@@ -64,11 +62,11 @@ ROS3D.PoseArray.prototype.processMessage = function(message){
   var line;
 
   for(var i=0;i<message.poses.length;i++){
-      var lineGeometry = new THREE_DEPRECATED.Geometry();
+      const vertices = [];
 
       var v3 = new THREE.Vector3( message.poses[i].position.x, message.poses[i].position.y,
                                   message.poses[i].position.z);
-      lineGeometry.vertices.push(v3);
+      vertices.push(v3);
 
       var rot = new THREE.Quaternion(message.poses[i].orientation.x, message.poses[i].orientation.y,
                                      message.poses[i].orientation.z, message.poses[i].orientation.w);
@@ -80,13 +78,14 @@ ROS3D.PoseArray.prototype.processMessage = function(message){
       side1.applyQuaternion(rot);
       side2.applyQuaternion(rot);
 
-      lineGeometry.vertices.push(tip.add(v3));
-      lineGeometry.vertices.push(side1.add(v3));
-      lineGeometry.vertices.push(side2.add(v3));
-      lineGeometry.vertices.push(tip);
-      
+      vertices.push(tip.add(v3));
+      vertices.push(side1.add(v3));
+      vertices.push(side2.add(v3));
+      vertices.push(tip);
+
+      var lineGeometry = new THREE.BufferGeometry().setFromPoints(vertices);
       var lineMaterial = new THREE.LineBasicMaterial( { color: this.color } );
-      line = new THREE.Line( lineGeometry.toBufferGeometry(), lineMaterial );
+      line = new THREE.Line( lineGeometry, lineMaterial );
       line.computeLineDistances();
 
       group.add(line);

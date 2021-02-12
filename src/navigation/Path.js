@@ -1,5 +1,3 @@
-import * as THREE_DEPRECATED from 'three/examples/jsm/deprecated/Geometry';
-
 /**
  * @author David V. Lu!! - davidvlu@gmail.com
  */
@@ -59,16 +57,17 @@ ROS3D.Path.prototype.processMessage = function(message){
       this.rootObject.remove(this.sn);
   }
 
-  var lineGeometry = new THREE_DEPRECATED.Geometry();
+  const vertices = [];
   for(var i=0; i<message.poses.length;i++){
       var v3 = new THREE.Vector3( message.poses[i].pose.position.x, message.poses[i].pose.position.y,
                                   message.poses[i].pose.position.z);
-      lineGeometry.vertices.push(v3);
+      vertices.push(v3);
   }
 
-  lineGeometry.computeLineDistances();
+  var lineGeometry = new THREE.BufferGeometry().setFromPoints(vertices);
   var lineMaterial = new THREE.LineBasicMaterial( { color: this.color } );
-  var line = new THREE.Line( lineGeometry.toBufferGeometry(), lineMaterial );
+  var line = new THREE.Line( lineGeometry, lineMaterial );
+  line.computeLineDistances();
 
   this.sn = new ROS3D.SceneNode({
       frameID : message.header.frame_id,
