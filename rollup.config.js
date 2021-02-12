@@ -29,6 +29,13 @@ const outputFiles = {
   browserGlobalMinified: './build/ros3d.min.js',
 };
 
+const bubleConfig = {
+  transforms: {
+    dangerousForOf: true, 
+    asyncAwait: false
+  }
+};
+
 export default [
   // build main as ES5 in CommonJS format for compatibility
   {
@@ -47,7 +54,7 @@ export default [
     plugins: [
       resolve({ browser: true }),
       commonjs(),
-      buble(),
+      buble(bubleConfig),
       filesize(),
     ],
   },
@@ -68,7 +75,7 @@ export default [
     plugins: [
       resolve({ browser: true }),
       commonjs(),
-      buble(),
+      buble(bubleConfig),
       filesize(),
     ],
   },
